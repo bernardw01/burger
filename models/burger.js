@@ -2,7 +2,7 @@ var orm = require('../config/orm');
 
 var burger = function () {
 
-    this.getBurgers = function (callback) {
+   this.getBurgers = function (callback) {
         orm.selectAll('burgers',
             function (res) {
                 console.log('------Got dem burgers');
@@ -27,17 +27,15 @@ var burger = function () {
             });
     }
 
-    this.updateBurger = function (id, burger_name, devoured, date, callback) {
+    this.updateBurger = function (id, devoured, callback) {
 
         var burgerObj = {
             id: id,
-            burger_name: burger_name,
-            devoured: devoured,
-            date: date
+            devoured: devoured
         }
-        orm.insertOne(burgerObj,
+        orm.updateOne(burgerObj,
             function (res) {
-                console.log('------Got dem burgers');
+                console.log('------ Update one response');
                 console.log(res);
                 callback(res);
 

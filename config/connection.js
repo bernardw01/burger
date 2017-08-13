@@ -7,7 +7,8 @@ var DataLayer = function () {
         port: '3306',
         user: 'maria',
         password: '12Password34',
-        database: 'bamazon'
+        database: 'bamazon',
+        debug: true
     }));
 
     this.connection.connect(function (err) {
@@ -16,42 +17,7 @@ var DataLayer = function () {
     });
     var connection = this.connection;
 
-    this.getMatches = function (searchObj, callback) {
 
-    };
-
-    this.getProductByID = function (prodID) {
-        var products = [];
-        this.connection.query({
-                sql: "SELECT ID, short_name, unit_price, department FROM products where ID = ?",
-                values: [prodID]
-            },
-            function (err, res) {
-                if (err) throw err;
-                // instantiate
-
-                for (var i = 0; i < res.length; i++) {
-                    products.push({
-                        id: res[i].ID,
-                        short_name: res[i].short_name,
-                        unit_price: res[i].unit_price,
-                        department: res[i].department
-                    })
-
-                }
-                console.log(JSON.stringify(products));
-                return products;
-
-            });
-
-    };
-
-
-    this.close = function () {
-        this.connection.end(function () {
-            console.log('---------- Connection closed --------');
-        });
-    }
 
     this.getConnection = function (){
 

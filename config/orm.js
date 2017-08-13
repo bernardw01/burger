@@ -1,9 +1,10 @@
-var dl = require('./connection');
+var dataLayer = require('./connection');
 
-var connection = new dl();
+var dl = new dataLayer();
+var connection = dl.getConnection();
 
 var orm = {
-    
+
     selectAll: function (tableName, callback) {
         connection.query({
                 sql: "SELECT * FROM ??",
@@ -25,13 +26,13 @@ var orm = {
             });
     },
     updateOne: function (burgerObj, callback) {
+        console.log("Burger Obj: " + JSON.stringify(burgerObj,null, 2));
         connection.query({
-                sql: "update burgers set burger_name = ?,  devoured = ?, date = ? where id = ?",
+                sql: "update burgers set devoured = ? where id = ?",
                 values: [
-                    burgerObj.burger_name,
-                    burgerObj.devoured,
-                    burgerObj.date,
-                    burgerObj.id]
+                    parseInt(burgerObj.devoured),
+                    parseInt(burgerObj.id)
+                ]
             },
             function (err, res) {
                 if (err) throw err;
@@ -39,5 +40,6 @@ var orm = {
             });
     }
 
-}
+};
 
+module.exports = orm;
